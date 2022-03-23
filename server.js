@@ -4,16 +4,16 @@ const mongoose = require('mongoose')
 
 require('dotenv').config()
 
-const userRouter = require('./routes/user.router.js')
 
 
 const app = express()
+
 
 mongoose.connect(process.env.MongoDB_URI, {useNewUrlParser: true})
 
 const db = mongoose.connection
 
-db.once('open', ()=> console.log('Database is connected and running'))
+db.once('open', ( )=> console.log('Database is connected and running'))
 
 
 
