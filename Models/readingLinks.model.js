@@ -1,13 +1,11 @@
-const moongose = require('mongoose')
+const moongose = require("mongoose");
 
 const readingListSchema = new moongose.Schema({
-    link: {},
-    linkWithoutPaywall: {},
-    title:{},
-    dateAdded:{},
+  username: { type: String, required: true },
+  link: { type: String, required: true },
+  linkWithoutPaywall: { type: String },
+  title: { type: String, required: false },
+  dateAdded: { type: Date, require: true, default: Date.now },
+});
 
-
-})
-
-
-module.exports = moongose.model('User', userSchema)
+module.exports = moongose.model("readingList", readingListSchema);
