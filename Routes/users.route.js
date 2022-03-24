@@ -34,9 +34,21 @@ router.post("/add", (req, res) => {
 
 //updating a user
 
-router.patch("update/:id");
+router.patch("update/:id", selectUser, (req,res)=>{
+  for(prop of req.body){
+    if(prop != null){
+      req
+    }
 
-//delete user
+    
+  }
+  try{
+
+  }catch(error){
+    
+  }
+})
+
 
 
 //get a single user
@@ -46,6 +58,7 @@ router.get("/:id", selectUser, (req, res) => {
   res.json(res.user);
 });
 
+//delete user
 
 router.delete("/:id", selectUser, (req, res) => {
   res.user.remove()
@@ -54,6 +67,8 @@ router.delete("/:id", selectUser, (req, res) => {
 });
 
 
+
+//function to act as middleware in above in the case in which the 
 
 async function selectUser(req, res, next) {
   let user;
