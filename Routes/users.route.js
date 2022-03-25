@@ -34,21 +34,18 @@ router.post("/add", (req, res) => {
 
 //updating a user
 
-router.patch("update/:id", selectUser, (req,res)=>{
-  for(prop of req.body){
+router.patch("/:id", selectUser, (req,res)=>{
+  for(prop of Object.keys(req.body)){
+    console.log(prop)
     if(prop != null){
-      req
+      console.log(req.body[prop])
+      res.user[prop] = req.body[prop];
     }
-
-    
   }
-  try{
-
-  }catch(error){
-    
-  }
+    res.user.save()
+    .then(()=>res.json(res.user))
+    .catch(error => res.status(400).json({message: error.message}))
 })
-
 
 
 //get a single user
