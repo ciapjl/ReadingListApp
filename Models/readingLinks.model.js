@@ -1,10 +1,12 @@
 const moongose = require("mongoose");
 
 const readingListSchema = new moongose.Schema({
-  username: { type: String, required: true },
-  link: { type: String, required: true },
-  linkWithoutPaywall: { type: String },
+  links: {
+    link: { type: String, required: true },
+    linkWithoutPaywall: { type: String },
+  },
   title: { type: String, required: false },
+  userID: { type: String, required: true },
   dateAdded: { type: Date, require: true, default: Date.now },
 });
 

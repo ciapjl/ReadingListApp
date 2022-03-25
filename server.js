@@ -2,8 +2,10 @@ const express = require("express");
 const mongoose = require("mongoose");
 
 require("dotenv").config();
-const usersRouter = require('./Routes/users.route')
+//import routes/controllers
 
+const usersRouter = require('./Routes/users.route')
+const readingLinksRouter = require('./Routes/readingLinks.route')
 
 
 //database connection and connection
@@ -18,6 +20,8 @@ const app = express();
 const port = process.env.PORT || 5000;
 app.use(express.json());
 app.use('/users', usersRouter)
+app.use('/readingLinks', readingLinksRouter)
+
 
 
 app.listen(5000, () => console.log("Server is listening on 5000"));
