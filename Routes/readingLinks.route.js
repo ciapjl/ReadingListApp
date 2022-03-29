@@ -19,6 +19,9 @@ router.get("/", (req, res) => {
 router.get("/user/:userID", selectUser, async (req, res) => {
   const userID = req.params.userID;
   console.log(userID);
+  if (res.user == undefined){
+    return 
+  }
   let userLinks;
   try {
     userLinks = await readingLinks.find({ userID });
@@ -29,7 +32,7 @@ router.get("/user/:userID", selectUser, async (req, res) => {
       res.status(404).json(`No links found for this user with id ${userID}`);
     }
   } catch (error) {
-    res.status(500).json({ message: message.error });
+    res.status(500).json({ message: error.message });
   }
 });
 
@@ -76,31 +79,30 @@ async function selectUser(req, res, next) {
   next();
 }
 
-async function selectLinks(selectLinks, req, res, next) {
-  let readingLinks;
-  const id = req.params.linksID;
+// async function selectLinks(selectLinks, req, res, next) {
+//   let readingLinks;
+//   const id = req.params.linksID;
 
-  try {
-    if (id.match(/^[0-9a-fA-F]{24}$/)) {
-      user = await readingLinks.findById(linksID);
-      if (user == null) {
-        return res.status(404).json({
-          message: `Cannot locate User with id ${id}`,
-        });
-      }
-    } else {
-      res.status(400).json({
-        message: `Invalid user ID format. This means also that no user exists with this user ID with id ${id}`,
-      });
-    }
-  } catch (error) {
-    return res.status(500).json({ message: error.message });
-  }
-  res.user = user;
+//   try {
+//     if (id.match(/^[0-9a-fA-F]{24}$/)) {
+//       user = await readingLinks.findById(linksID);
+//       if (user == null) {
+//         return res.status(404).json({
+//           message: `Cannot locate User with id ${id}`,
+//         });
+//       }
+//     } else {
+//       res.status(400).json({
+//         message: `Invalid user ID format. This means also that no user exists with this user ID with id ${id}`,
+//       });
+//     }
+//   } catch (error) {
+//     return res.status(500).json({ message: error.message });
+//   }
+//   res.user = user;
 
-  next();
-}
+//   next();
+// }
 
-async function selectLinks(selectUser, req, res, next) {}
 
 module.exports = router;
