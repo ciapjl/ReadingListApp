@@ -2,8 +2,8 @@ const express = require("express");
 const User = require("../Models/user.model");
 const readingLinks = require("../Models/readingLinks.model");
 
-const selectUser = require('./selectUser')
-
+const selectUser = require("./selectUser");
+const selectLink = require("./selectLink");
 router = express.Router();
 
 //get all links(probably not a good idea for security reasons but kept here for now for dev reasons)
@@ -20,8 +20,8 @@ router.get("/", (req, res) => {
 router.get("/user/:userID", selectUser, async (req, res) => {
   const userID = req.params.userID;
   console.log(userID);
-  if (res.user == undefined){
-    return 
+  if (res.user == undefined) {
+    return;
   }
   let userLinks;
   try {
@@ -37,8 +37,7 @@ router.get("/user/:userID", selectUser, async (req, res) => {
   }
 });
 
-
-//post a new link
+//post a new link, links must be tied to users
 
 router.post("/user/:userID", (req, res) => {
   const link = req.body.links.link;
@@ -58,15 +57,22 @@ router.post("/user/:userID", (req, res) => {
   }
 });
 
+//delete link
 
-
-
-
-
-
-
-
-
-
+router.delete(
+  "/user/:userID/link/:linkID",
+  selectUser,
+  selectLink,
+  (req, res) => {
+    if (res.link == undefined) {
+      return;
+    } else {
+      res.link
+        .remove()
+        .then(() => res.status(201).json(`Deleted link ${req.params.linkID}`))
+        .catch((error) => res.status(500).json({ error: error.message }));
+    }
+  }
+);
 
 module.exports = router;

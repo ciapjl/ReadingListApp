@@ -7,7 +7,7 @@ const readingListSchema = new moongose.Schema({
   },
   title: { type: String, required: false },
   userID: { type: String, required: true },
-  dateAdded: { type: Date, require: true, default: Date.now },
+  dateAdded: { type: Date, required: true, default: Date.now },
 });
 
 module.exports = moongose.model("readingList", readingListSchema);
